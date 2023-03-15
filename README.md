@@ -1,5 +1,7 @@
 # Terrorarium
 
+![My Image](ScreenShot.png)
+
 ## Overview
 Terrorarium is a project I'm using to learn about F#, functional programming, machine learning, and genetic algorithms. It consists of animals eating food, and improving how to do so over time.
 
