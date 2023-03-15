@@ -46,8 +46,8 @@ let DefaultConfig =
         SimRotationAccel = MathNet.Numerics.Constants.Pi / 2.0
         SimGenerationLength = 2500
 
-        //WorldAnimals = 40
-        //WorldFoods = 60
-        WorldAnimals = 1
+        WorldAnimals = 40
         WorldFoods = 60
+        //WorldAnimals = 1
+        //WorldFoods = 60
     }

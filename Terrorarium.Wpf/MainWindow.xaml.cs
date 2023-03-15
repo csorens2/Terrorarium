@@ -43,12 +43,7 @@ namespace Terrorarium.Wpf
 
         public void OnRender(object sender, EventArgs e)
         {
-            if (UpdateStopwatch.Elapsed.Seconds > 1 && FirstDraw == false)
-            {
-                DrawSimulation(this.Simulation);
-                FirstDraw = true;
-            }
-            else if (UpdateStopwatch.Elapsed.Milliseconds > 5)
+            if (UpdateStopwatch.Elapsed.Milliseconds > 5)
             {
                 var nextSim = this.Simulation.Step();
                 this.Simulation = nextSim.Item1;
