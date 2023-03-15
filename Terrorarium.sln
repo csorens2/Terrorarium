@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terrorarium", "Terrorarium\Terrorarium.csproj", "{F5BAE591-E0B7-4246-AC4E-18411CEC8608}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terrorarium.Wpf", "Terrorarium.Wpf\Terrorarium.Wpf.csproj", "{98211F9E-FAD1-4E9A-8A29-2722EFD17E63}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Terrorarium.Fs", "Terrorarium.Fs\Terrorarium.Fs.fsproj", "{02E08970-7045-41D8-91B6-FF244458B8F4}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Terrorarium.Fs.Tests", "Terrorarium.Fs.Tests\Terrorarium.Fs.Tests.fsproj", "{41232FFE-7003-49DD-AB34-1EAD1AFAC777}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F5BAE591-E0B7-4246-AC4E-18411CEC8608}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F5BAE591-E0B7-4246-AC4E-18411CEC8608}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F5BAE591-E0B7-4246-AC4E-18411CEC8608}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F5BAE591-E0B7-4246-AC4E-18411CEC8608}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98211F9E-FAD1-4E9A-8A29-2722EFD17E63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98211F9E-FAD1-4E9A-8A29-2722EFD17E63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98211F9E-FAD1-4E9A-8A29-2722EFD17E63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98211F9E-FAD1-4E9A-8A29-2722EFD17E63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02E08970-7045-41D8-91B6-FF244458B8F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02E08970-7045-41D8-91B6-FF244458B8F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02E08970-7045-41D8-91B6-FF244458B8F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02E08970-7045-41D8-91B6-FF244458B8F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41232FFE-7003-49DD-AB34-1EAD1AFAC777}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41232FFE-7003-49DD-AB34-1EAD1AFAC777}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41232FFE-7003-49DD-AB34-1EAD1AFAC777}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41232FFE-7003-49DD-AB34-1EAD1AFAC777}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

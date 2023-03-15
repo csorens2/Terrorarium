@@ -7,4 +7,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Terrorarium.Fs\Terrorarium.Fs.fsproj" />
+  </ItemGroup>
+
 </Project>

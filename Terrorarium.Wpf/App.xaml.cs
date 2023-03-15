@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Terrorarium
+namespace Terrorarium.Wpf
 {
     /// <summary>
     /// Interaction logic for App.xaml

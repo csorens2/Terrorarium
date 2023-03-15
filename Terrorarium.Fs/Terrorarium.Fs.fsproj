@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<TargetFramework>net7.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="RNG.fs" />
+		<Compile Include="ExtraFunctions.fs" />
+		<Compile Include="Config.fs" />
+		<Compile Include="GeneticAlgorithm\Chromosome.fs" />
+		<Compile Include="GeneticAlgorithm\IIndividual.fs" />
+		<Compile Include="GeneticAlgorithm\GAStatistics.fs" />
+		<Compile Include="GeneticAlgorithm\Crossover\ICrossoverMethod.fs" />
+		<Compile Include="GeneticAlgorithm\Crossover\UniformCrossover.fs" />
+		<Compile Include="GeneticAlgorithm\Selection\ISelectionMethod.fs" />
+		<Compile Include="GeneticAlgorithm\Selection\RouletteWheelSelection.fs" />
+		<Compile Include="GeneticAlgorithm\Mutation\IMutationMethod.fs" />
+		<Compile Include="GeneticAlgorithm\Mutation\GaussianMutation.fs" />
+		<Compile Include="GeneticAlgorithm\GeneticAlgorithm.fs" />
+		<Compile Include="NeuralNetwork\LayerTopology.fs" />
+		<Compile Include="NeuralNetwork\Neuron.fs" />
+		<Compile Include="NeuralNetwork\Layer.fs" />
+		<Compile Include="NeuralNetwork\NeuralNetwork.fs" />
+		<Compile Include="Simulation\Food.fs" />
+		<Compile Include="Simulation\Animal\Eye.fs" />
+		<Compile Include="Simulation\Animal\Brain.fs" />
+		<Compile Include="Simulation\SimulationStatistics.fs" />
+		<Compile Include="Simulation\Animal\Animal.fs" />
+		<Compile Include="Simulation\Animal\AnimalIndividual.fs" />
+		<Compile Include="Simulation\World.fs" />
+		<Compile Include="Simulation\Simulation.fs" />
+		<Compile Include="Program.fs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MathNet.Numerics.FSharp" Version="5.0.0" />
+		<PackageReference Include="MathNet.Spatial" Version="0.6.0" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+    <GenerateProgramFile>false</GenerateProgramFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="TestIndividual.fs" />
+    <Compile Include="GeneticAlgorithmTests\GaussianMutationTests.fs" />
+    <Compile Include="GeneticAlgorithmTests\UniformCrossoverTests.fs" />
+    <Compile Include="GeneticAlgorithmTests\RouletteWheelSelectionTests.fs" />
+    <Compile Include="NeuralNetworkTests\NeuronTests.fs" />
+    <Compile Include="SimulationTests\EyeTests.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
+    <PackageReference Include="coverlet.collector" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Terrorarium.Fs\Terrorarium.Fs.fsproj" />
+  </ItemGroup>
+
+</Project>
