@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Terrorarium.Wpf": {
+      "commandName": "Project"
+    },
+    "Visuals": {
+      "commandName": "Project"
+    },
+    "Stats Only": {
+      "commandName": "Project"
+    }
+  }
+}

@@ -16,6 +16,7 @@ let Random outputNeurons =
     let randomBias = RNG.NextRangeFloat(-1.0,1.0)
     let randomWeights = 
         Seq.init outputNeurons (fun _ -> RNG.NextRangeFloat(-1.0,1.0))
+        |> Seq.cache
     New randomBias randomWeights
 
 let FromWeights outputNeurons weights = 

@@ -20,6 +20,7 @@ let Random layerTopologies =
         }
     let randomLayers = 
         buildLayers (Seq.windowed 2 layerTopologies)
+        |> Seq.cache
     {NeuralNetwork.Layers = randomLayers}
 
 let FromWeights layerTopologies weights = 

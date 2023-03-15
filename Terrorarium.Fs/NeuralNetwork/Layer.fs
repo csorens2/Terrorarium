@@ -16,7 +16,7 @@ let FromWeights inputSize weights =
     {Layer.Neurons = (buildNeurons weights)}
 
 let Random inputNeurons outputNeurons = 
-    {Layer.Neurons = Seq.init outputNeurons (fun _ -> Neuron.Random(inputNeurons))}
+    {Layer.Neurons = Seq.cache (Seq.init outputNeurons (fun _ -> Neuron.Random(inputNeurons)))}
 
 let Propagate inputs layer = 
     layer.Neurons
