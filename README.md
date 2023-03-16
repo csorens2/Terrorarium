@@ -6,9 +6,11 @@
 Terrorarium is a project I'm using to learn about F#, functional programming, machine learning, and genetic algorithms. It consists of animals eating food, and improving how to do so over time.
 
 ## Future Improvements
-> Performance Improvements
+> ~~Performance Improvements~~
 
-As my first large F# project, I was not versed in best practices ahead of time. So the first step is to go back and fix unintended performance problems. 
+~~As my first large F# project, I was not versed in best practices ahead of time. So the first step is to go back and fix unintended performance problems.~~
+
+Complete
 
 > Weight and Simulation Stat Files
 
