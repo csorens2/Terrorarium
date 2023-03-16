@@ -11,7 +11,7 @@ open Eye
 type Animal = {
     Position: Point2D
     Rotation: Vector2D
-    Vision: seq<float>
+    Vision: float array
     Speed: float
     Eye: Eye
     Brain: Brain
@@ -22,7 +22,7 @@ let private New config brain =
     {
         Animal.Position = Point2D(RNG.NextDouble (), RNG.NextDouble ())
         Rotation = Vector2D.FromPolar(1.0, Angle.FromDegrees(RNG.NextRangeFloat(-180.0, 180.0)))
-        Vision = Seq.init config.EyeCells (fun _ -> 0.0)
+        Vision = Array.init config.EyeCells (fun _ -> 0.0)
         Speed = config.SimSpeedMax
         Eye = Eye.New config
         Brain = brain

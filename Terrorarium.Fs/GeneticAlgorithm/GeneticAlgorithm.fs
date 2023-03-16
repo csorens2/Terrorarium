@@ -11,10 +11,10 @@ type GeneticAlgorithm (
     member this.SelectionMethod = selectionMethod
     member this.CrossoverMethod = crossoverMethod
     member this.MutationMethod = mutationMethod
-    member this.Evolve (population: seq<IIndividual>) = 
+    member this.Evolve (population: IIndividual array) = 
         let evolvedPopulation =  
             population
-            |> Seq.map (fun x ->
+            |> Array.map (fun x ->
                 let parent_a = this.SelectionMethod.Select population
                 let parent_b = this.SelectionMethod.Select population
                 let child = this.CrossoverMethod.Crossover parent_a.Chromosome parent_b.Chromosome

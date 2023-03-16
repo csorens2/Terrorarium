@@ -1,5 +1,5 @@
 ﻿module Chromosome
 
 type Chromosome = {
-    Genes: seq<float>
+    Genes: float array
 }

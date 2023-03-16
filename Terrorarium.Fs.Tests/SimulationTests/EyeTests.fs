@@ -31,7 +31,7 @@ type EyeTests () =
         let testFood = 
             testFoodPolar 
             |> Seq.map (fun vec -> {Food.Position = Point2D(vec.X, vec.Y); Food.CollisionRadius = 0.01})
-            |> Seq.toList
+            |> Seq.toArray
 
         let expectedResult = 0.8
         let processResult = 
@@ -62,6 +62,7 @@ type EyeTests () =
         let testFood = 
             testFoodPolar 
             |> Seq.map (fun vec -> {Food.Position = Point2D(vec.X, vec.Y); Food.CollisionRadius = 0.01})
+            |> Seq.toArray
 
         let processResult = 
             Eye.ProcessVision animalPos animalRotation testFood testEye

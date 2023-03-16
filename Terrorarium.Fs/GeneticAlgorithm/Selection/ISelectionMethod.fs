@@ -1,4 +1,4 @@
 ﻿namespace Terrorarium
 
 type ISelectionMethod = 
-    abstract member Select: seq<IIndividual> -> IIndividual
+    abstract member Select: IIndividual array -> IIndividual

@@ -5,7 +5,7 @@
 
 type Neuron = {
     Bias: float
-    Weights: seq<float>
+    Weights: float array
     Threshold: float
 }
 
@@ -15,16 +15,16 @@ let New bias weights =
 let Random outputNeurons = 
     let randomBias = RNG.NextRangeFloat(-1.0,1.0)
     let randomWeights = 
-        Seq.init outputNeurons (fun _ -> RNG.NextRangeFloat(-1.0,1.0))
+        Array.init outputNeurons (fun _ -> RNG.NextRangeFloat(-1.0,1.0))
     New randomBias randomWeights
 
 let FromWeights outputNeurons weights = 
-    if outputNeurons <> ((Seq.length weights) - 1) then
+    if outputNeurons <> ((Array.length weights) - 1) then
             failwith "Insufficient weights given to Neuron"
-    New (Seq.head weights) (Seq.tail weights)
+    New (Array.head weights) (Array.tail weights)
 
 let Propogate inputs neuron = 
-    if Seq.length inputs <> Seq.length neuron.Weights then
+    if Array.length inputs <> Array.length neuron.Weights then
             failwith "Neuron weight count does not match input count"
     let output = 
         inputs

@@ -1,12 +1,15 @@
 ﻿using MathNet.Spatial.Euclidean;
 using MathNet.Spatial.Units;
+using Microsoft.FSharp.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Terrorarium;
 
 namespace Terrorarium.Wpf
 {
@@ -15,60 +18,79 @@ namespace Terrorarium.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Canvas WindowCanvas { get; set; }
+        private Canvas SimulationCanvas { get; set; }
+
+        private TextBlock SimulationStatsBox { get; set; }
 
         private Simulation Simulation { get; set; }
+
+        private DateTime StartTime { get; }
 
         public MainWindow()
         {
             InitializeComponent();
 
-            Canvas myCanvas = new Canvas();
-            myCanvas.Background = Brushes.LightSteelBlue;
-
+            SimulationCanvas = new Canvas();
+            SimulationCanvas.Background = Brushes.LightSteelBlue;
             ScaleTransform scaleTransform = new ScaleTransform(1, -1, .5, .5);
-            myCanvas.LayoutTransform = scaleTransform;
+            SimulationCanvas.LayoutTransform = scaleTransform;
 
-            WindowCanvas = myCanvas;
-            this.Content = myCanvas;
+            SimulationStatsBox = new TextBlock();
 
-            Simulation = new Simulation();
+            ColumnDefinition statsColumn = new ColumnDefinition();
+            GridLength statsColumnLength = new GridLength(2.0, GridUnitType.Star);
+            statsColumn.Width = statsColumnLength;
 
+            ColumnDefinition simColumn = new ColumnDefinition();
+            GridLength SimColumnLength = new GridLength(8.0, GridUnitType.Star);
+            simColumn.Width = SimColumnLength;
+            
+            Grid testGrid = new Grid();
+            testGrid.ColumnDefinitions.Add(statsColumn);
+            testGrid.ColumnDefinitions.Add(simColumn);
 
+            Grid.SetColumn(SimulationCanvas, 1);
+            Grid.SetColumn(SimulationStatsBox, 0);
+
+            testGrid.Children.Add(SimulationCanvas);
+            testGrid.Children.Add(SimulationStatsBox);
+
+            this.Content = testGrid;
+            this.Simulation = Simulator.NewDefault();
             CompositionTarget.Rendering += OnRender;
+            StartTime = DateTime.Now;
         }
 
         private static Stopwatch UpdateStopwatch = Stopwatch.StartNew();
-        private static bool FirstDraw = false;
 
         public void OnRender(object sender, EventArgs e)
         {
             if (UpdateStopwatch.Elapsed.Milliseconds > 5)
             {
-                var nextSim = this.Simulation.Step();
-                this.Simulation = nextSim.Item1;
+                this.Simulation = Simulator.Step(this.Simulation);
                 DrawSimulation(this.Simulation);
+                WriteSimulationResults(this.Simulation);
                 UpdateStopwatch = Stopwatch.StartNew();
             }
         }
 
         public void DrawSimulation(Simulation sim)
         {
-            WindowCanvas.Children.Clear();
+            SimulationCanvas.Children.Clear();
 
             foreach (var animal in sim.World.Animals)
             {
                 var canvasPoint = new Point(
-                    animal.Position.X * WindowCanvas.ActualWidth,
-                    animal.Position.Y * WindowCanvas.ActualHeight);
-                DrawTriangle(canvasPoint, .01 * WindowCanvas.ActualWidth, animal.Rotation);
+                    animal.Position.X * SimulationCanvas.ActualWidth,
+                    animal.Position.Y * SimulationCanvas.ActualHeight);
+                DrawTriangle(canvasPoint, .01 * SimulationCanvas.ActualWidth, animal.Rotation);
             }
             foreach (var food in sim.World.Foods)
             {
                 var canvasPoint = new Point(
-                    food.Position.X * WindowCanvas.ActualWidth,
-                    food.Position.Y * WindowCanvas.ActualHeight);
-                DrawCircle(canvasPoint, (0.01 / 2.0) * WindowCanvas.ActualWidth);
+                    food.Position.X * SimulationCanvas.ActualWidth,
+                    food.Position.Y * SimulationCanvas.ActualHeight);
+                DrawCircle(canvasPoint, (0.01 / 2.0) * SimulationCanvas.ActualWidth);
             }
 
             this.InvalidateVisual();
@@ -86,7 +108,7 @@ namespace Terrorarium.Wpf
             Canvas.SetLeft(ellipse, center.X - radius);
             Canvas.SetTop(ellipse, center.Y - radius);
 
-            WindowCanvas.Children.Add(ellipse);
+            SimulationCanvas.Children.Add(ellipse);
             ellipse.InvalidateVisual();
         }
 
@@ -117,8 +139,41 @@ namespace Terrorarium.Wpf
             triangle.Points = new PointCollection(pointlist);
             triangle.Fill = Brushes.Black;
 
-            WindowCanvas.Children.Add(triangle);
+            SimulationCanvas.Children.Add(triangle);
             triangle.InvalidateVisual();
+        }
+
+        public void WriteSimulationResults(Simulation sim)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("Terrorarium");
+            builder.AppendLine($"Started: {StartTime.ToString("h:mm:ss tt")}");
+            builder.AppendLine();
+            foreach (var stats in sim.Statistics)
+            {
+                var gaStats = stats.GAStatistics;
+                builder.AppendLine($"Generation: {stats.Generation}");
+                builder.AppendLine($"{nameof(gaStats.AvgFitness)}: {gaStats.AvgFitness}");
+                builder.AppendLine($"{nameof(gaStats.MaxFitness)}: {gaStats.MaxFitness}");
+                builder.AppendLine($"{nameof(gaStats.MinFitness)}: {gaStats.MinFitness}");
+                builder.AppendLine($"{nameof(gaStats.MedianFitness)}: {gaStats.MedianFitness}");
+                builder.AppendLine();
+            }
+            builder.AppendLine("Current Simulation Age");
+            builder.AppendLine($"{sim.Age} out of {sim.Config.SimGenerationLength}");
+
+            SimulationStatsBox.Text = builder.ToString();
+            /*
+            try
+            {
+                var statsValue = stats.Value;
+                StatsBox.AppendLine($"Generation: {statsValue.Generation}");
+                StatsBox.AppendLine($"{nameof(statsValue.GAStatistics.MaxFitness)}: {statsValue.GAStatistics.MaxFitness}");
+                StatsBox.AppendLine($"{nameof(statsValue.GAStatistics.AvgFitness)}: {statsValue.GAStatistics.AvgFitness}");
+                SimulationStatsBox.Text = StatsBox.ToString();
+            }
+            catch (NullReferenceException) { }
+            */
         }
     }
 }

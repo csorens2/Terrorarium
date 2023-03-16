@@ -47,7 +47,6 @@ let DefaultConfig =
         SimGenerationLength = 2500
 
         WorldAnimals = 40
-        WorldFoods = 60
         //WorldAnimals = 1
-        //WorldFoods = 60
+        WorldFoods = 60
     }

@@ -5,7 +5,7 @@ open Layer
 open Neuron
 
 type NeuralNetwork = {
-    Layers: seq<Layer>
+    Layers: Layer array
 }
 
 let New layers = 
@@ -20,6 +20,7 @@ let Random layerTopologies =
         }
     let randomLayers = 
         buildLayers (Seq.windowed 2 layerTopologies)
+        |> Seq.toArray
     {NeuralNetwork.Layers = randomLayers}
 
 let FromWeights layerTopologies weights = 
@@ -27,7 +28,7 @@ let FromWeights layerTopologies weights =
         if not (Seq.isEmpty windowedLayers) then
             let window = Seq.head windowedLayers
             let totalWeights = (1 + window[0].Neurons) * window[1].Neurons
-            yield Layer.FromWeights window[0].Neurons (Seq.take totalWeights remainingWeights)
+            yield Layer.FromWeights window[0].Neurons (Seq.toArray (Seq.take totalWeights remainingWeights))
             yield! buildLayers
                 (Seq.tail windowedLayers)
                 (Seq.skip totalWeights remainingWeights)
@@ -35,15 +36,15 @@ let FromWeights layerTopologies weights =
     let windowedLayers = 
         layerTopologies
         |> Seq.windowed 2
-    {NeuralNetwork.Layers = (buildLayers windowedLayers weights)}
+    {NeuralNetwork.Layers = Seq.toArray (buildLayers windowedLayers weights)}
 
 let Propagate neuralNetwork inputs  = 
     neuralNetwork.Layers
-    |> Seq.fold(fun lastLayerResult nextLayer -> 
+    |> Array.fold(fun lastLayerResult nextLayer -> 
         Layer.Propagate lastLayerResult nextLayer) inputs
 
 let Weights neuralNetwork = 
     neuralNetwork.Layers
-    |> Seq.collect (fun x -> 
+    |> Array.collect (fun x -> 
         x.Neurons 
-        |> Seq.collect (fun y -> Seq.append [y.Bias] y.Weights)) 
+        |> Array.collect (fun y -> Array.append [|y.Bias|] y.Weights)) 
