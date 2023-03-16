@@ -8,7 +8,7 @@ type GAStatistics = {
 }
 
 module GAStatistics = 
-    let New (population: IIndividual array) = 
+    let New population = 
         let len = Array.length population
 
         let fitnesses = 

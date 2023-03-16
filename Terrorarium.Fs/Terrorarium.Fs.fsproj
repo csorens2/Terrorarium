@@ -10,7 +10,7 @@
 		<Compile Include="ExtraFunctions.fs" />
 		<Compile Include="Config.fs" />
 		<Compile Include="GeneticAlgorithm\Chromosome.fs" />
-		<Compile Include="GeneticAlgorithm\IIndividual.fs" />
+		<Compile Include="GeneticAlgorithm\Individual.fs" />
 		<Compile Include="GeneticAlgorithm\GAStatistics.fs" />
 		<Compile Include="GeneticAlgorithm\Crossover\CrossoverMethod.fs" />
 		<Compile Include="GeneticAlgorithm\Crossover\UniformCrossover.fs" />

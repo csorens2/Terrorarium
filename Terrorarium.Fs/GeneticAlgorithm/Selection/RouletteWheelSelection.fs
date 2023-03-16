@@ -1,8 +1,8 @@
 ﻿namespace Terrorarium
 
 module RouletteWheelSelection = 
-    let GetIndividual (individuals: IIndividual array) (roll:float) = 
-        let rec rec_getIndividual (remainingIndividuals: seq<float * IIndividual>) remainingRoll =
+    let GetIndividual individuals (roll:float) = 
+        let rec rec_getIndividual (remainingIndividuals: seq<float * Individual>) remainingRoll =
             let (individSlice, nextIndivid) = Seq.head remainingIndividuals
             let nextRoll = remainingRoll - individSlice
             if nextRoll <= 0 then

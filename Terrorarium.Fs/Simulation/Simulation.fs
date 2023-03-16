@@ -76,13 +76,13 @@ module Simulator =
 
         let individuals = 
             world.Animals
-            |> Array.map (fun animal -> AnimalIndividual(animal))
+            |> Array.map (fun animal -> AnimalIndividual.New animal)
+            |> Array.map (fun animalIndivid -> animalIndivid.Individual)
             |> Array.map (fun individual -> 
                 if simulation.Config.GAReverse = 1 then
-                    AnimalIndividual((float maxSatiation) - individual.Fitness, individual.Chromosome)
+                    {individual with Fitness = (float maxSatiation) - individual.Fitness}
                 else
                     individual)
-            |> Array.map (fun x -> x :> IIndividual)
 
         let ga = {
             GeneticAlgorithm.SelectionMethod = {SelectionMethod.Select = RouletteWheelSelection.Select};

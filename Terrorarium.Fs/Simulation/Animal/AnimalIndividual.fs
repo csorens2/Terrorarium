@@ -1,20 +1,23 @@
 ﻿namespace Terrorarium
 
-type AnimalIndividual(fitness, chromosome) =
-    member this.Fitness = fitness
-    member this.Chromosome = chromosome
-    new(animal:Animal) = 
-        AnimalIndividual(float animal.Satiation, Animal.AsChromosome animal)
-    member this.IntoAnimal config = 
-        Animal.FromChromosome config this.Chromosome
+type AnimalIndividual = {
+    Individual: Individual
+}
 
-    interface IIndividual with
-        member this.Create(interfaceChromo) = 
-            AnimalIndividual(0.0, interfaceChromo)
-        member this.Chromosome = 
-            this.Chromosome
-        member this.Fitness = 
-            this.Fitness
-    
-            
-    
+module AnimalIndividual = 
+       
+    let rec Create chromosome = 
+        {
+            Individual.Create = Create 
+            Chromosome = chromosome
+            Fitness = 0.0
+        }
+
+    let New animal = 
+        {AnimalIndividual.Individual = {
+            Individual.Create = Create
+            Individual.Chromosome = Animal.AsChromosome animal
+            Individual.Fitness = float animal.Satiation}}
+
+    let IntoAnimal config animalIndivid =
+        Animal.FromChromosome config animalIndivid
