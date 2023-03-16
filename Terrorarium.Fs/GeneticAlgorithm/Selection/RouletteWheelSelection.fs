@@ -1,11 +1,7 @@
 ﻿namespace Terrorarium
 
-type RouletteWheelSelection() =
-    interface ISelectionMethod with
-        member this.Select individuals = 
-            RouletteWheelSelection.GetIndividual individuals (RNG.NextDouble ())
-
-    static member GetIndividual (individuals: IIndividual array) (roll:float) = 
+module RouletteWheelSelection = 
+    let GetIndividual (individuals: IIndividual array) (roll:float) = 
         let rec rec_getIndividual (remainingIndividuals: seq<float * IIndividual>) remainingRoll =
             let (individSlice, nextIndivid) = Seq.head remainingIndividuals
             let nextRoll = remainingRoll - individSlice
@@ -20,3 +16,6 @@ type RouletteWheelSelection() =
             individuals
             |> Seq.map (fun x -> x.Fitness / totalFitness, x)
         rec_getIndividual individualSlices roll
+
+    let Select individuals = 
+        GetIndividual individuals (RNG.NextDouble ())

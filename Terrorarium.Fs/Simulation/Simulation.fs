@@ -84,12 +84,14 @@ module Simulator =
                     individual)
             |> Array.map (fun x -> x :> IIndividual)
 
-        let ga = GeneticAlgorithm(
-                    RouletteWheelSelection(), 
-                    UniformCrossover(), 
-                    GaussianMutation(simulation.Config.GAMutChance, simulation.Config.GAMutCoeff))
+        let ga = {
+            GeneticAlgorithm.SelectionMethod = {SelectionMethod.Select = RouletteWheelSelection.Select};
+            GeneticAlgorithm.CrossoverMethod = {CrossoverMethod.Crossover = UniformCrossover.Crossover};
+            GeneticAlgorithm.MutationMethod = {
+                MutationMethod.Mutate = 
+                    GaussianMutation.Mutate simulation.Config.GAMutChance simulation.Config.GAMutCoeff}}
 
-        let (evolvedIndividuals, gaStats) = ga.Evolve individuals
+        let (evolvedIndividuals, gaStats) = GeneticAlgorithm.Evolve ga individuals
 
         let newAnimals = 
             evolvedIndividuals

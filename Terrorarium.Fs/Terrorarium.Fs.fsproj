@@ -12,11 +12,11 @@
 		<Compile Include="GeneticAlgorithm\Chromosome.fs" />
 		<Compile Include="GeneticAlgorithm\IIndividual.fs" />
 		<Compile Include="GeneticAlgorithm\GAStatistics.fs" />
-		<Compile Include="GeneticAlgorithm\Crossover\ICrossoverMethod.fs" />
+		<Compile Include="GeneticAlgorithm\Crossover\CrossoverMethod.fs" />
 		<Compile Include="GeneticAlgorithm\Crossover\UniformCrossover.fs" />
-		<Compile Include="GeneticAlgorithm\Selection\ISelectionMethod.fs" />
+		<Compile Include="GeneticAlgorithm\Selection\SelectionMethod.fs" />
 		<Compile Include="GeneticAlgorithm\Selection\RouletteWheelSelection.fs" />
-		<Compile Include="GeneticAlgorithm\Mutation\IMutationMethod.fs" />
+		<Compile Include="GeneticAlgorithm\Mutation\MutationMethod.fs" />
 		<Compile Include="GeneticAlgorithm\Mutation\GaussianMutation.fs" />
 		<Compile Include="GeneticAlgorithm\GeneticAlgorithm.fs" />
 		<Compile Include="NeuralNetwork\LayerTopology.fs" />
