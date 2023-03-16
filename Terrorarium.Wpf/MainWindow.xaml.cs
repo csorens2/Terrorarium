@@ -146,11 +146,10 @@ namespace Terrorarium.Wpf
         public void WriteSimulationResults(Simulation sim)
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine("Terrorarium");
             builder.AppendLine($"Started: {StartTime.ToString("h:mm:ss tt")}");
             builder.AppendLine();
             builder.AppendLine("Current Simulation Age");
-            builder.AppendLine($"{sim.Age} out of {sim.Config.SimGenerationLength}");
+            builder.AppendLine($"{sim.Age} steps out of {sim.Config.SimGenerationLength}");
             builder.AppendLine();
             foreach (var stats in sim.Statistics)
             {

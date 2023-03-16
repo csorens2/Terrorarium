@@ -14,16 +14,15 @@ type Animal = {
 }
 
 module Animal = 
-    let New config brain = 
-        {
-            Animal.Position = Point2D(RNG.NextDouble (), RNG.NextDouble ())
-            Rotation = Vector2D.FromPolar(1.0, Angle.FromDegrees(RNG.NextRangeFloat(-180.0, 180.0)))
-            Vision = Array.init config.EyeCells (fun _ -> 0.0)
-            Speed = config.SimSpeedMax
-            Eye = Eye.New config
-            Brain = brain
-            Satiation = 0
-        }    
+    let New config brain = {
+        Animal.Position = Point2D(RNG.NextDouble (), RNG.NextDouble ())
+        Rotation = Vector2D.FromPolar(1.0, Angle.FromDegrees(RNG.NextRangeFloat(-180.0, 180.0)))
+        Vision = Array.init config.EyeCells (fun _ -> 0.0)
+        Speed = config.SimSpeedMax
+        Eye = Eye.New config
+        Brain = brain
+        Satiation = 0
+    }    
 
     let Random config =
         let brain = Brain.Random config

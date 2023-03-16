@@ -6,12 +6,11 @@ type AnimalIndividual = {
 
 module AnimalIndividual = 
        
-    let rec Create chromosome = 
-        {
-            Individual.Create = Create 
-            Chromosome = chromosome
-            Fitness = 0.0
-        }
+    let rec Create chromosome = {
+        Individual.Create = Create 
+        Chromosome = chromosome
+        Fitness = 0.0
+    }
 
     let New animal = 
         {AnimalIndividual.Individual = {

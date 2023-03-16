@@ -10,11 +10,10 @@ type RouletteWheelSelectionTests () =
     member this.``Test Roulette Wheel Returns Correct Individual`` () =
         let testIndividuals = 
             [
-                TestIndividual(1.0, {Chromosome.Genes = Array.empty})
-                TestIndividual(2.0, {Chromosome.Genes = Array.empty})
-                TestIndividual(3.0, {Chromosome.Genes = Array.empty})
+                {TestIndividual.New with Fitness = 1.0} 
+                {TestIndividual.New with Fitness = 2.0} 
+                {TestIndividual.New with Fitness = 3.0} 
             ]
-            |> Seq.map(fun x -> x :> IIndividual)
             |> Seq.toArray
         
         let actual1 = RouletteWheelSelection.GetIndividual testIndividuals 0.1

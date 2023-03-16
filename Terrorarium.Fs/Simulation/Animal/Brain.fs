@@ -7,12 +7,11 @@ type Brain = {
 }
 
 module Brain = 
-    let Topology config = 
-        [
-            {LayerTopology.Neurons = config.EyeCells}
-            {LayerTopology.Neurons = 2 * config.BrainNeurons}
-            {LayerTopology.Neurons = 2}
-        ]
+    let Topology config = [
+        {LayerTopology.Neurons = config.EyeCells}
+        {LayerTopology.Neurons = 2 * config.BrainNeurons}
+        {LayerTopology.Neurons = 2}
+    ]
 
     let New config nn = 
         {Brain.SpeedAccel = config.SimSpeedAccel; RotationAccel = config.SimRotationAccel; NeuralNetwork = nn}

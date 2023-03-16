@@ -15,7 +15,7 @@ module Eye =
     let New config = 
         {Eye.FOVRange = config.EyeFOVRange; FOVAngle = config.EyeFOVAngle; Cells = config.EyeCells}
 
-    let ProcessVision (position:Point2D) (facing:Vector2D) (foods: Food array) (eye:Eye) = 
+    let ProcessVision (position:Point2D) (facing:Vector2D) (food: Food array) (eye:Eye) = 
         let foodInVision (food:Food) = 
             let foodVector = position.VectorTo(food.Position)
             let foodAngle = facing.SignedAngleTo(foodVector, false, true)
@@ -37,9 +37,28 @@ module Eye =
             cell
         let cellEnergy (cellFood: Food array) = 
             cellFood
-            |> Array.fold (fun acc next -> acc + ((eye.FOVRange - position.DistanceTo(next.Position)) / eye.FOVRange)) 0.0
+            |> Array.fold (fun acc next -> acc + (1.0 - (position.DistanceTo(next.Position) / eye.FOVRange))) 0.0
+        let rec getWrappedFood remainingFood = seq {
+            if not (List.isEmpty remainingFood) then
+                let translationVecs = [
+                    Vector2D(1.0,0.0)
+                    Vector2D(-1.0,0.0)
+                    Vector2D(0.0,1.0)
+                    Vector2D(0.0,-1.0)
+                    Vector2D(0.0,0.0)
+                ]
+                let nextFood = List.head remainingFood
+                let translatedFood = 
+                    translationVecs
+                    |> List.map(fun x -> {nextFood with Position = nextFood.Position + x})
+                yield! translatedFood
+                yield! getWrappedFood (List.tail remainingFood)
+        }
         let eyeCellDict = 
-            foods
+            food
+            |> Array.toList
+            |> getWrappedFood
+            |> Seq.toArray
             |> Array.where (fun x -> foodInVision x)
             |> Array.groupBy (fun x -> getCellForFood x)
             |> Array.map (fun (cell,food) -> (cell, cellEnergy food))

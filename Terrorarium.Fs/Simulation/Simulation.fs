@@ -43,8 +43,7 @@ module Simulator =
         let newFood = 
             Array.init eatenFood (fun _ -> Food.New simulation.Config)
         {simulation with 
-            World = {world with Animals = List.toArray animals; Foods = Array.append leftoverFood newFood}
-        }
+            World = {world with Animals = List.toArray animals; Foods = Array.append leftoverFood newFood}}
     
 
     let ProcessBrains simulation =
@@ -53,8 +52,7 @@ module Simulator =
             world.Animals
             |> Array.map(fun x -> Animal.ProcessBrain simulation.Config world.Foods x)
         {simulation with 
-            World = {world with Animals = processedAnimals}
-        }
+            World = {world with Animals = processedAnimals}}
 
     let ProcessMovements simulation =
         let world = simulation.World
@@ -62,13 +60,10 @@ module Simulator =
             world.Animals
             |> Array.map(fun x -> Animal.ProcessMovement x)
         {simulation with 
-            World = {world with Animals = processedAnimals} 
-        }
+            World = {world with Animals = processedAnimals}}
 
     let Evolve simulation = 
-
         let world = simulation.World
-
         let maxSatiation = 
             world.Animals
             |> Array.map (fun animal -> animal.Satiation)
@@ -106,8 +101,7 @@ module Simulator =
             World = {world with Animals = newAnimals; Foods = newFood};
             Statistics = stats :: simulation.Statistics;
             Generation = simulation.Generation + 1;
-            Age = 0
-        }
+            Age = 0}
 
     let TryEvolving simulation = 
         if simulation.Age > simulation.Config.SimGenerationLength then
