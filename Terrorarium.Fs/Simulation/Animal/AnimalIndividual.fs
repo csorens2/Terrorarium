@@ -1,7 +1,5 @@
 ﻿namespace Terrorarium
 
-open Animal
-
 type AnimalIndividual(fitness, chromosome) =
     member this.Fitness = fitness
     member this.Chromosome = chromosome

@@ -1,8 +1,6 @@
 ﻿namespace Terrorarium.Tests
 open Terrorarium
 
-open Chromosome
-
 type TestIndividual(fitness: float, chromosome: Chromosome) = 
     member this.Fitness = fitness
     member this.Chromosome = chromosome

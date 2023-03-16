@@ -149,6 +149,9 @@ namespace Terrorarium.Wpf
             builder.AppendLine("Terrorarium");
             builder.AppendLine($"Started: {StartTime.ToString("h:mm:ss tt")}");
             builder.AppendLine();
+            builder.AppendLine("Current Simulation Age");
+            builder.AppendLine($"{sim.Age} out of {sim.Config.SimGenerationLength}");
+            builder.AppendLine();
             foreach (var stats in sim.Statistics)
             {
                 var gaStats = stats.GAStatistics;
@@ -159,21 +162,8 @@ namespace Terrorarium.Wpf
                 builder.AppendLine($"{nameof(gaStats.MedianFitness)}: {gaStats.MedianFitness}");
                 builder.AppendLine();
             }
-            builder.AppendLine("Current Simulation Age");
-            builder.AppendLine($"{sim.Age} out of {sim.Config.SimGenerationLength}");
 
             SimulationStatsBox.Text = builder.ToString();
-            /*
-            try
-            {
-                var statsValue = stats.Value;
-                StatsBox.AppendLine($"Generation: {statsValue.Generation}");
-                StatsBox.AppendLine($"{nameof(statsValue.GAStatistics.MaxFitness)}: {statsValue.GAStatistics.MaxFitness}");
-                StatsBox.AppendLine($"{nameof(statsValue.GAStatistics.AvgFitness)}: {statsValue.GAStatistics.AvgFitness}");
-                SimulationStatsBox.Text = StatsBox.ToString();
-            }
-            catch (NullReferenceException) { }
-            */
         }
     }
 }

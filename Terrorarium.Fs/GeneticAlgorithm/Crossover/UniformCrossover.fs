@@ -1,7 +1,5 @@
 ﻿namespace Terrorarium
 
-open Chromosome
-
 type UniformCrossover() = 
     interface ICrossoverMethod with
         member this.Crossover parent_a parent_b = 

@@ -2,12 +2,6 @@
 
 open MathNet.Spatial.Euclidean
 
-open Terrorarium
-open Config
-open Animal
-open Food
-open World
-
 type Simulation = {
     World: World
     Config: Config

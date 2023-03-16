@@ -2,7 +2,6 @@
 
 open Microsoft.VisualStudio.TestTools.UnitTesting
 open Terrorarium
-open Chromosome
 
 [<TestClass>]
 type RouletteWheelSelectionTests () = 
