@@ -10,7 +10,7 @@ type GaussianMutation (chance: float, coeff: float) =
         member this.Mutate child = 
             let mutatedGenes = 
                 child.Genes
-                |> Seq.map (fun x -> 
+                |> Array.map (fun x -> 
                     let sign = 
                         if RNG.NextBool () then
                             -1.0

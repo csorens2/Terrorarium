@@ -9,14 +9,13 @@ type GAStatistics = {
     MedianFitness: float
 }
 
-let New (population: seq<IIndividual>) = 
-    let len = Seq.length population
+let New (population: IIndividual array) = 
+    let len = Array.length population
 
     let fitnesses = 
         population
-        |> Seq.map (fun x -> x.Fitness)
-        |> Seq.sortBy (fun x -> x)
-        |> Seq.toList
+        |> Array.map (fun x -> x.Fitness)
+        |> Array.sortBy (fun x -> x)
 
     let minFit = fitnesses[0]
     let maxFit = fitnesses[len - 1]

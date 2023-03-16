@@ -16,7 +16,7 @@ type Eye = {
 let New config = 
     {Eye.FOVRange = config.EyeFOVRange; FOVAngle = config.EyeFOVAngle; Cells = config.EyeCells}
 
-let ProcessVision (position:Point2D) (facing:Vector2D) (foods: seq<Food>) (eye:Eye) = 
+let ProcessVision (position:Point2D) (facing:Vector2D) (foods: Food array) (eye:Eye) = 
     let foodInVision (food:Food) = 
         let foodVector = position.VectorTo(food.Position)
         let foodAngle = facing.SignedAngleTo(foodVector, false, true)
@@ -36,17 +36,17 @@ let ProcessVision (position:Point2D) (facing:Vector2D) (foods: seq<Food>) (eye:E
         // Corner case for food on the exact farthest edge
         let cell = min (int cellFloat) (eye.Cells - 1)
         cell
-    let cellEnergy (cellFood: seq<Food>) = 
+    let cellEnergy (cellFood: Food array) = 
         cellFood
-        |> Seq.fold (fun acc next -> acc + ((eye.FOVRange - position.DistanceTo(next.Position)) / eye.FOVRange)) 0.0
+        |> Array.fold (fun acc next -> acc + ((eye.FOVRange - position.DistanceTo(next.Position)) / eye.FOVRange)) 0.0
     let eyeCellDict = 
         foods
-        |> Seq.where (fun x -> foodInVision x)
-        |> Seq.groupBy (fun x -> getCellForFood x)
-        |> Seq.map (fun (cell,food) -> (cell, cellEnergy food))
-        |> Seq.fold (fun (acc: Map<int,float>) (cell,energy) -> acc.Add(cell, energy)) Map.empty
-    [0..eye.Cells - 1]
-    |> Seq.map (fun cell -> 
+        |> Array.where (fun x -> foodInVision x)
+        |> Array.groupBy (fun x -> getCellForFood x)
+        |> Array.map (fun (cell,food) -> (cell, cellEnergy food))
+        |> Array.fold (fun (acc: Map<int,float>) (cell,energy) -> acc.Add(cell, energy)) Map.empty
+    [|0..eye.Cells - 1|]
+    |> Array.map (fun cell -> 
         if eyeCellDict.ContainsKey(cell) then
             eyeCellDict[cell]
         else

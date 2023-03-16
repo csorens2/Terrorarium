@@ -1,5 +1,6 @@
 ﻿using MathNet.Spatial.Euclidean;
 using MathNet.Spatial.Units;
+using Microsoft.FSharp.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Terrorarium;
 
 namespace Terrorarium.Wpf
 {
@@ -22,24 +24,18 @@ namespace Terrorarium.Wpf
 
         private Simulation Simulation { get; set; }
 
+        private DateTime StartTime { get; }
+
         public MainWindow()
         {
             InitializeComponent();
 
-            Canvas simCanvas = new Canvas();
-            simCanvas.Background = Brushes.LightSteelBlue;
+            SimulationCanvas = new Canvas();
+            SimulationCanvas.Background = Brushes.LightSteelBlue;
             ScaleTransform scaleTransform = new ScaleTransform(1, -1, .5, .5);
-            simCanvas.LayoutTransform = scaleTransform;
-            SimulationCanvas = simCanvas;
-            Simulation = new Simulation();
+            SimulationCanvas.LayoutTransform = scaleTransform;
 
-            TextBlock statsBox = new TextBlock();
-            //statsBox.Background = Brushes.Black;
-            StringBuilder builder = new StringBuilder();
-            builder.AppendLine("Lorem");
-            builder.AppendLine("Ipsem");
-            statsBox.Text = builder.ToString();
-            SimulationStatsBox = statsBox;
+            SimulationStatsBox = new TextBlock();
 
             ColumnDefinition statsColumn = new ColumnDefinition();
             GridLength statsColumnLength = new GridLength(2.0, GridUnitType.Star);
@@ -53,14 +49,16 @@ namespace Terrorarium.Wpf
             testGrid.ColumnDefinitions.Add(statsColumn);
             testGrid.ColumnDefinitions.Add(simColumn);
 
-            Grid.SetColumn(simCanvas, 1);
-            Grid.SetColumn(statsBox, 0);
+            Grid.SetColumn(SimulationCanvas, 1);
+            Grid.SetColumn(SimulationStatsBox, 0);
 
-            testGrid.Children.Add(simCanvas);
-            testGrid.Children.Add(statsBox);
+            testGrid.Children.Add(SimulationCanvas);
+            testGrid.Children.Add(SimulationStatsBox);
 
             this.Content = testGrid;
+            this.Simulation = Simulator.NewDefault();
             CompositionTarget.Rendering += OnRender;
+            StartTime = DateTime.Now;
         }
 
         private static Stopwatch UpdateStopwatch = Stopwatch.StartNew();
@@ -69,9 +67,9 @@ namespace Terrorarium.Wpf
         {
             if (UpdateStopwatch.Elapsed.Milliseconds > 5)
             {
-                var nextSim = this.Simulation.Step();
-                this.Simulation = nextSim.Item1;
+                this.Simulation = Simulator.Step(this.Simulation);
                 DrawSimulation(this.Simulation);
+                WriteSimulationResults(this.Simulation);
                 UpdateStopwatch = Stopwatch.StartNew();
             }
         }
@@ -143,6 +141,39 @@ namespace Terrorarium.Wpf
 
             SimulationCanvas.Children.Add(triangle);
             triangle.InvalidateVisual();
+        }
+
+        public void WriteSimulationResults(Simulation sim)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("Terrorarium");
+            builder.AppendLine($"Started: {StartTime.ToString("h:mm:ss tt")}");
+            builder.AppendLine();
+            foreach (var stats in sim.Statistics)
+            {
+                var gaStats = stats.GAStatistics;
+                builder.AppendLine($"Generation: {stats.Generation}");
+                builder.AppendLine($"{nameof(gaStats.AvgFitness)}: {gaStats.AvgFitness}");
+                builder.AppendLine($"{nameof(gaStats.MaxFitness)}: {gaStats.MaxFitness}");
+                builder.AppendLine($"{nameof(gaStats.MinFitness)}: {gaStats.MinFitness}");
+                builder.AppendLine($"{nameof(gaStats.MedianFitness)}: {gaStats.MedianFitness}");
+                builder.AppendLine();
+            }
+            builder.AppendLine("Current Simulation Age");
+            builder.AppendLine($"{sim.Age} out of {sim.Config.SimGenerationLength}");
+
+            SimulationStatsBox.Text = builder.ToString();
+            /*
+            try
+            {
+                var statsValue = stats.Value;
+                StatsBox.AppendLine($"Generation: {statsValue.Generation}");
+                StatsBox.AppendLine($"{nameof(statsValue.GAStatistics.MaxFitness)}: {statsValue.GAStatistics.MaxFitness}");
+                StatsBox.AppendLine($"{nameof(statsValue.GAStatistics.AvgFitness)}: {statsValue.GAStatistics.AvgFitness}");
+                SimulationStatsBox.Text = StatsBox.ToString();
+            }
+            catch (NullReferenceException) { }
+            */
         }
     }
 }
