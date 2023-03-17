@@ -23,6 +23,7 @@ This requires much more complicated neural networks to work well. The afformenti
 ## Special Thanks
 Patryk Wychowaniec. Terrorarium started as a F# port of his Shorelark project, which can be found here.
 https://github.com/Patryk27/shorelark
+
 https://pwy.io/posts/learning-to-fly-pt1/
 
 
