@@ -71,10 +71,9 @@ module Simulator =
 
         let individuals = 
             world.Animals
-            |> Array.map (fun animal -> AnimalIndividual.New animal)
-            |> Array.map (fun animalIndivid -> animalIndivid.Individual)
+            |> Array.map (fun animal -> AnimalIndividual.FromAnimal animal)
             |> Array.map (fun individual -> 
-                if simulation.Config.GAReverse = 1 then
+                if simulation.Config.GAReverse then
                     {individual with Fitness = (float maxSatiation) - individual.Fitness}
                 else
                     individual)
@@ -120,7 +119,4 @@ module Simulator =
 
     let New config = 
         {Simulation.Config = config; World = World.New config; Age = 0; Generation = 0; Statistics = List.empty}
-
-    let NewDefault() = 
-        New Config.DefaultConfig
     

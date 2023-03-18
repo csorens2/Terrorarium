@@ -11,7 +11,7 @@ type Config = {
 
         FoodSize:float
         
-        GAReverse:int
+        GAReverse:bool
         GAMutChance:float
         GAMutCoeff:float
 
@@ -25,27 +25,50 @@ type Config = {
         WorldFoods:int
     }
 
-module Config = 
-    let DefaultConfig = 
-        {
-            BrainNeurons = 9
+module ConfigPresets = 
+    let DefaultConfig = {
+        BrainNeurons = 9
 
-            EyeFOVRange = 0.25
-            EyeFOVAngle = Angle.FromRadians(MathNet.Numerics.Constants.Pi * 1.25)
-            EyeCells = 9
+        EyeFOVRange = 0.25
+        EyeFOVAngle = Angle.FromRadians(MathNet.Numerics.Constants.Pi * 1.25)
+        EyeCells = 9
 
-            FoodSize = 0.01
+        FoodSize = 0.01
         
-            GAReverse = 0
-            GAMutChance = 0.01
-            GAMutCoeff = 0.3
+        GAReverse = false
+        GAMutChance = 0.01
+        GAMutCoeff = 0.3
 
-            SimSpeedMin = 0.001
-            SimSpeedMax = 0.005
-            SimSpeedAccel = 0.2
-            SimRotationAccel = MathNet.Numerics.Constants.Pi / 2.0
-            SimGenerationLength = 2500
+        SimSpeedMin = 0.001
+        SimSpeedMax = 0.005
+        SimSpeedAccel = 0.2
+        SimRotationAccel = MathNet.Numerics.Constants.Pi / 2.0
+        SimGenerationLength = 2500
 
-            WorldAnimals = 40
-            WorldFoods = 60
-        }
+        WorldAnimals = 40
+        WorldFoods = 60
+    }
+
+    let UpgradeConfig = {
+        BrainNeurons = 18
+
+        EyeFOVRange = 0.25
+        EyeFOVAngle = Angle.FromDegrees(180.0)
+        EyeCells = 18
+
+        FoodSize = 0.01
+        
+        GAReverse = false
+        GAMutChance = 0.01
+        GAMutCoeff = 0.3
+
+        SimSpeedMin = 0.001
+        SimSpeedMax = 0.005
+        SimSpeedAccel = 0.2
+        SimRotationAccel = MathNet.Numerics.Constants.Pi / 2.0
+        SimGenerationLength = 2500
+
+        WorldAnimals = 40
+        WorldFoods = 60
+    }
+

@@ -56,7 +56,7 @@ namespace Terrorarium.Wpf
             testGrid.Children.Add(SimulationStatsBox);
 
             this.Content = testGrid;
-            this.Simulation = Simulator.NewDefault();
+            this.Simulation = Simulator.New(ConfigPresets.UpgradeConfig);
             CompositionTarget.Rendering += OnRender;
             StartTime = DateTime.Now;
         }

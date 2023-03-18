@@ -1,9 +1,5 @@
 ﻿namespace Terrorarium
 
-type AnimalIndividual = {
-    Individual: Individual
-}
-
 module AnimalIndividual = 
        
     let rec Create chromosome = {
@@ -12,11 +8,11 @@ module AnimalIndividual =
         Fitness = 0.0
     }
 
-    let New animal = 
-        {AnimalIndividual.Individual = {
-            Individual.Create = Create
-            Individual.Chromosome = Animal.AsChromosome animal
-            Individual.Fitness = float animal.Satiation}}
+    let FromAnimal animal = {
+        Individual.Create = Create
+        Chromosome = Animal.AsChromosome animal
+        Fitness = float animal.Satiation
+    }
 
     let IntoAnimal config animalIndivid =
         Animal.FromChromosome config animalIndivid
