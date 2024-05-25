@@ -1,6 +1,6 @@
 ﻿using MathNet.Spatial.Euclidean;
 using MathNet.Spatial.Units;
-using Microsoft.FSharp.Core;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +9,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Terrorarium;
 
 namespace Terrorarium.Wpf
 {
@@ -26,6 +25,12 @@ namespace Terrorarium.Wpf
 
         private DateTime StartTime { get; }
 
+        private static Stopwatch UpdateStopwatch = Stopwatch.StartNew();
+
+        private readonly SolidColorBrush ButtonDefaultColor;
+        private readonly SolidColorBrush ButtonOnColor = Brushes.Green;
+
+        /*
         public MainWindow()
         {
             InitializeComponent();
@@ -37,32 +42,80 @@ namespace Terrorarium.Wpf
 
             SimulationStatsBox = new TextBlock();
 
-            ColumnDefinition statsColumn = new ColumnDefinition();
-            GridLength statsColumnLength = new GridLength(2.0, GridUnitType.Star);
-            statsColumn.Width = statsColumnLength;
-
-            ColumnDefinition simColumn = new ColumnDefinition();
-            GridLength SimColumnLength = new GridLength(8.0, GridUnitType.Star);
-            simColumn.Width = SimColumnLength;
-            
-            Grid testGrid = new Grid();
-            testGrid.ColumnDefinitions.Add(statsColumn);
-            testGrid.ColumnDefinitions.Add(simColumn);
-
+            Grid mainGrid = new Grid();
+            mainGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2.0, GridUnitType.Star) });
+            mainGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(8.0, GridUnitType.Star) });
+           
             Grid.SetColumn(SimulationCanvas, 1);
             Grid.SetColumn(SimulationStatsBox, 0);
 
-            testGrid.Children.Add(SimulationCanvas);
-            testGrid.Children.Add(SimulationStatsBox);
+            mainGrid.Children.Add(SimulationCanvas);
+            mainGrid.Children.Add(SimulationStatsBox);
 
-            this.Content = testGrid;
+            this.Content = mainGrid;
             this.Simulation = Simulator.New(ConfigPresets.UpgradeConfig);
             CompositionTarget.Rendering += OnRender;
             StartTime = DateTime.Now;
         }
+        */
 
-        private static Stopwatch UpdateStopwatch = Stopwatch.StartNew();
+        public MainWindow()
+        {
+            InitializeComponent();
 
+            SetupButtons();
+            ButtonDefaultColor = LoadWeightsButton.Background as SolidColorBrush;
+        }
+
+        public void SetupButtons()
+        {
+            this.LoadWeightsButton.Click += LoadWeightsOnClick;
+            this.RandomWeightsButton.Click += RandomWeightsOnClick;
+            this.StartSimulationButton.Click += StartButtonOnClick;
+
+            
+        }
+
+        public void LoadWeightsOnClick(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Json files (*.json)|*.json";
+            bool? result = dialog.ShowDialog();
+            
+            if (result == true)
+            {
+                LoadWeightsButton.Background = ButtonOnColor;
+                StartSimulationButton.Background = ButtonOnColor;
+            }
+            else
+            {
+                ResetButtons();
+            }
+        }
+
+        public void RandomWeightsOnClick(object sender, RoutedEventArgs e)
+        {
+            LoadWeightsButton.Background = ButtonDefaultColor;
+            RandomWeightsButton.Background = ButtonOnColor;
+            StartSimulationButton.Background = ButtonOnColor;
+        }
+
+        public void StartButtonOnClick(object sender, RoutedEventArgs e)
+        {
+            if (ButtonDefaultColor != LoadWeightsButton.Background)
+            {
+
+            }
+        }
+
+        public void ResetButtons()
+        {
+            LoadWeightsButton.Background = ButtonDefaultColor;
+            RandomWeightsButton.Background = ButtonDefaultColor;
+            StartSimulationButton.Background = ButtonDefaultColor;
+        }
+
+        /*
         public void OnRender(object sender, EventArgs e)
         {
             if (UpdateStopwatch.Elapsed.Milliseconds > 5)
@@ -73,6 +126,7 @@ namespace Terrorarium.Wpf
                 UpdateStopwatch = Stopwatch.StartNew();
             }
         }
+        */
 
         public void DrawSimulation(Simulation sim)
         {
@@ -118,23 +172,24 @@ namespace Terrorarium.Wpf
             var x = center.X;
             var y = center.Y;
 
-            var rotationRads = Vector2D.FromPolar(1.0, Angle.FromDegrees(0)).SignedAngleTo(rotation, false, true).Radians;
+            var rotationRads = 
+                (Angle.FromDegrees(-90).Radians) +
+                Vector2D.FromPolar(1.0, Angle.FromDegrees(0)).SignedAngleTo(rotation, false, true).Radians;
 
-            var baseRotation = Angle.FromDegrees(-90).Radians;
             List<Point> pointlist = new List<Point>
             {
                 new Point(
-                    x - Math.Sin(baseRotation + rotationRads) * size * 1.5,
-                    y + Math.Cos(baseRotation + rotationRads) * size * 1.5),
+                    x - Math.Sin(rotationRads) * size * 1.5,
+                    y + Math.Cos(rotationRads) * size * 1.5),
                 new Point(
-                    x - Math.Sin(baseRotation + rotationRads + 2.0 / 3.0 * Math.PI) * size,
-                    y + Math.Cos(baseRotation + rotationRads + 2.0 / 3.0 * Math.PI) * size),
+                    x - Math.Sin(rotationRads + 2.0 / 3.0 * Math.PI) * size,
+                    y + Math.Cos(rotationRads + 2.0 / 3.0 * Math.PI) * size),
                 new Point(
-                    x - Math.Sin(baseRotation + rotationRads + 4.0 / 3.0 * Math.PI) * size,
-                    y + Math.Cos(baseRotation + rotationRads + 4.0 / 3.0 * Math.PI) * size),
+                    x - Math.Sin(rotationRads + 4.0 / 3.0 * Math.PI) * size,
+                    y + Math.Cos(rotationRads + 4.0 / 3.0 * Math.PI) * size),
                 new Point(
-                    x - Math.Sin(baseRotation + rotationRads) * size * 1.5,
-                    y + Math.Cos(baseRotation + rotationRads) * size * 1.5)
+                    x - Math.Sin(rotationRads) * size * 1.5,
+                    y + Math.Cos(rotationRads) * size * 1.5)
             };
             triangle.Points = new PointCollection(pointlist);
             triangle.Fill = Brushes.Black;
