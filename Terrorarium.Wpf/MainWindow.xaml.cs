@@ -17,63 +17,34 @@ namespace Terrorarium.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Canvas SimulationCanvas { get; set; }
-
-        private TextBlock SimulationStatsBox { get; set; }
-
         private Simulation Simulation { get; set; }
 
-        private DateTime StartTime { get; }
+        private DateTime StartTime { get; set; }
 
         private static Stopwatch UpdateStopwatch = Stopwatch.StartNew();
 
-        private readonly SolidColorBrush ButtonDefaultColor;
+        private readonly SolidColorBrush ButtonTextDefaultColor;
         private readonly SolidColorBrush ButtonOnColor = Brushes.Green;
-
-        /*
+        
         public MainWindow()
         {
             InitializeComponent();
-
-            SimulationCanvas = new Canvas();
-            SimulationCanvas.Background = Brushes.LightSteelBlue;
-            ScaleTransform scaleTransform = new ScaleTransform(1, -1, .5, .5);
-            SimulationCanvas.LayoutTransform = scaleTransform;
-
-            SimulationStatsBox = new TextBlock();
-
-            Grid mainGrid = new Grid();
-            mainGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2.0, GridUnitType.Star) });
-            mainGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(8.0, GridUnitType.Star) });
-           
-            Grid.SetColumn(SimulationCanvas, 1);
-            Grid.SetColumn(SimulationStatsBox, 0);
-
-            mainGrid.Children.Add(SimulationCanvas);
-            mainGrid.Children.Add(SimulationStatsBox);
-
-            this.Content = mainGrid;
-            this.Simulation = Simulator.New(ConfigPresets.UpgradeConfig);
-            CompositionTarget.Rendering += OnRender;
-            StartTime = DateTime.Now;
-        }
-        */
-
-        public MainWindow()
-        {
-            InitializeComponent();
-
             SetupButtons();
-            ButtonDefaultColor = LoadWeightsButton.Background as SolidColorBrush;
+            SimulationCanvas.LayoutTransform = new ScaleTransform(1, -1, .5, .5);
         }
 
         public void SetupButtons()
         {
             this.LoadWeightsButton.Click += LoadWeightsOnClick;
             this.RandomWeightsButton.Click += RandomWeightsOnClick;
-            this.StartSimulationButton.Click += StartButtonOnClick;
+            this.StartSimulationButton.Click += StartButtonOnClick;   
+        }
 
-            
+        public void StartSimulation()
+        {
+            this.Simulation = Simulator.New(ConfigPresets.UpgradeConfig);
+            CompositionTarget.Rendering += OnRender;
+            StartTime = DateTime.Now;
         }
 
         public void LoadWeightsOnClick(object sender, RoutedEventArgs e)
@@ -84,8 +55,9 @@ namespace Terrorarium.Wpf
             
             if (result == true)
             {
-                LoadWeightsButton.Background = ButtonOnColor;
-                StartSimulationButton.Background = ButtonOnColor;
+                LoadWeightsButton.Foreground = ButtonOnColor;
+                StartSimulationButton.Foreground = ButtonOnColor;
+                RandomWeightsButton.Foreground = Brushes.Black;
             }
             else
             {
@@ -95,27 +67,27 @@ namespace Terrorarium.Wpf
 
         public void RandomWeightsOnClick(object sender, RoutedEventArgs e)
         {
-            LoadWeightsButton.Background = ButtonDefaultColor;
-            RandomWeightsButton.Background = ButtonOnColor;
-            StartSimulationButton.Background = ButtonOnColor;
+            LoadWeightsButton.Foreground = Brushes.Black;
+            RandomWeightsButton.Foreground = ButtonOnColor;
+            StartSimulationButton.Foreground = ButtonOnColor;
         }
 
         public void StartButtonOnClick(object sender, RoutedEventArgs e)
         {
-            if (ButtonDefaultColor != LoadWeightsButton.Background)
+            if (Brushes.Black != LoadWeightsButton.Background)
             {
-
+                StartSimulation();
             }
         }
 
         public void ResetButtons()
         {
-            LoadWeightsButton.Background = ButtonDefaultColor;
-            RandomWeightsButton.Background = ButtonDefaultColor;
-            StartSimulationButton.Background = ButtonDefaultColor;
+            LoadWeightsButton.Foreground = Brushes.Black;
+            RandomWeightsButton.Foreground = Brushes.Black;
+            StartSimulationButton.Foreground = Brushes.Black;
         }
 
-        /*
+        
         public void OnRender(object sender, EventArgs e)
         {
             if (UpdateStopwatch.Elapsed.Milliseconds > 5)
@@ -126,7 +98,7 @@ namespace Terrorarium.Wpf
                 UpdateStopwatch = Stopwatch.StartNew();
             }
         }
-        */
+        
 
         public void DrawSimulation(Simulation sim)
         {
@@ -217,7 +189,7 @@ namespace Terrorarium.Wpf
                 builder.AppendLine();
             }
 
-            SimulationStatsBox.Text = builder.ToString();
+            SimulationResultBlock.Text = builder.ToString();
         }
     }
 }

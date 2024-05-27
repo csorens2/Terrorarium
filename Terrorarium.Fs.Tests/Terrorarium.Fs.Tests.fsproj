@@ -14,6 +14,7 @@
     <Compile Include="GeneticAlgorithmTests\RouletteWheelSelectionTests.fs" />
     <Compile Include="NeuralNetworkTests\NeuronTests.fs" />
     <Compile Include="SimulationTests\EyeTests.fs" />
+    <Compile Include="WeightFileTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
