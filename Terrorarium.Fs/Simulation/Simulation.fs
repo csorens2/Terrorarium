@@ -43,7 +43,7 @@ module Simulator =
         let newFood = 
             Array.init eatenFood (fun _ -> Food.New simulation.Config)
         {simulation with 
-            World = {world with Animals = List.toArray animals; Foods = Array.append leftoverFood newFood}}
+            World = {World.Animals = List.toArray animals; Foods = Array.append leftoverFood newFood}}
     
 
     let ProcessBrains simulation =
@@ -97,7 +97,7 @@ module Simulator =
         let stats = {SimulationStatistics.Generation = simulation.Generation; GAStatistics = gaStats}
 
         {simulation with 
-            World = {world with Animals = newAnimals; Foods = newFood};
+            World = {World.Animals = newAnimals; Foods = newFood};
             Statistics = stats :: simulation.Statistics;
             Generation = simulation.Generation + 1;
             Age = 0}

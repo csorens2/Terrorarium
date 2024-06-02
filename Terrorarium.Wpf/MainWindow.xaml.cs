@@ -63,6 +63,8 @@ namespace Terrorarium.Wpf
             {
                 ResetButtons();
             }
+
+            ResetButtons();
         }
 
         public void RandomWeightsOnClick(object sender, RoutedEventArgs e)

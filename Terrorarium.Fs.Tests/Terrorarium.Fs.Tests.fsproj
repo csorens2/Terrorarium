@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Compile Include="TestIndividual.fs" />
+    <Compile Include="ExtraFunctionTests.fs" />
     <Compile Include="GeneticAlgorithmTests\GaussianMutationTests.fs" />
     <Compile Include="GeneticAlgorithmTests\UniformCrossoverTests.fs" />
     <Compile Include="GeneticAlgorithmTests\RouletteWheelSelectionTests.fs" />

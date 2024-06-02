@@ -7,7 +7,13 @@ open MathNet.Spatial.Units
 let inline (>=<) a (b,c) = b <= a && a <= c
 
 let Wrap (num:float) (min:float) (max:float) = 
-    (((num - min) % (max - min)) + (max - min)) % (max - min) + min
+    
+    if min >= max then 
+        failwith "Failed attempting to wrap with %f as min, and %f as max" min max
+    else
+        let leftShift = num - min
+        let range = max - min
+        ((leftShift % range) + range) % range + min
 
 let Clamp num (left, right) = 
     if num < left then
