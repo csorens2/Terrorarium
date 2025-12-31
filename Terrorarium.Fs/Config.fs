@@ -23,6 +23,8 @@ type Config = {
 
         WorldAnimals:int
         WorldFoods:int
+
+        RankSelectionPressure: float
     }
 
 module ConfigPresets = 
@@ -47,6 +49,8 @@ module ConfigPresets =
 
         WorldAnimals = 40
         WorldFoods = 60
+
+        RankSelectionPressure = 1.5
     }
 
     let UpgradeConfig = {
@@ -70,5 +74,7 @@ module ConfigPresets =
 
         WorldAnimals = 40
         WorldFoods = 60
+
+        RankSelectionPressure = 1.5
     }
 

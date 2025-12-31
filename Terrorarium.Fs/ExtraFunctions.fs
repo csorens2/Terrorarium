@@ -9,7 +9,7 @@ let inline (>=<) a (b,c) = b <= a && a <= c
 let Wrap (num:float) (min:float) (max:float) = 
     
     if min >= max then 
-        failwith "Failed attempting to wrap with %f as min, and %f as max" min max
+        failwith $"Failed attempting to wrap with {min} as min, and {max} as max"
     else
         let leftShift = num - min
         let range = max - min

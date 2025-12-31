@@ -10,9 +10,11 @@
   <ItemGroup>
     <Compile Include="TestIndividual.fs" />
     <Compile Include="ExtraFunctionTests.fs" />
+    <Compile Include="GeneticAlgorithmTests\StatisticsTests.fs" />
+    <Compile Include="GeneticAlgorithmTests\RankSelectionTests.fs" />
+    <Compile Include="GeneticAlgorithmTests\RandomSelectionTests.fs" />
     <Compile Include="GeneticAlgorithmTests\GaussianMutationTests.fs" />
     <Compile Include="GeneticAlgorithmTests\UniformCrossoverTests.fs" />
-    <Compile Include="GeneticAlgorithmTests\RouletteWheelSelectionTests.fs" />
     <Compile Include="NeuralNetworkTests\NeuronTests.fs" />
     <Compile Include="SimulationTests\EyeTests.fs" />
     <Compile Include="WeightFileTests.fs" />

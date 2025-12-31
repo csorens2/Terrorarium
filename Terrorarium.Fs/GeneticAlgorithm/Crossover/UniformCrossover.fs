@@ -6,15 +6,13 @@ module UniformCrossover =
             failwith "Cannot perform crossover: Parents not of same length"
 
         let childGenes = 
-            (Seq.zip (Array.zip parent_a.Genes parent_b.Genes) crossover_choices)
-            |> Seq.map (fun ((a_gene, b_gene), select) -> 
-                if select then
-                    a_gene
-                else
-                    b_gene)
+            Array.zip parent_a.Genes parent_b.Genes
+            |> Seq.zip crossover_choices
+            |> Seq.map (fun (choice, (a_gene, b_gene)) -> if choice then a_gene else b_gene)
             |> Seq.toArray
         {Chromosome.Genes = childGenes}
 
     let Crossover parent_a parent_b = 
-        PerformCrossover parent_a parent_b (RNG.InfiniteBools ())
+        let choices = Seq.initInfinite (fun _ -> List.randomChoice [true; false])
+        PerformCrossover parent_a parent_b choices
 

@@ -12,5 +12,4 @@ let NextBool () =
         true
     else
         false
-let InfiniteBools () = Seq.initInfinite (fun _ -> NextBool ())
 

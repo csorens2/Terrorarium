@@ -14,6 +14,8 @@
 		<Compile Include="GeneticAlgorithm\GAStatistics.fs" />
 		<Compile Include="GeneticAlgorithm\Crossover\CrossoverMethod.fs" />
 		<Compile Include="GeneticAlgorithm\Crossover\UniformCrossover.fs" />
+		<Compile Include="GeneticAlgorithm\Selection\RandomSelection.fs" />
+		<Compile Include="geneticalgorithm\selection\RankSelection.fs" />
 		<Compile Include="GeneticAlgorithm\Selection\SelectionMethod.fs" />
 		<Compile Include="GeneticAlgorithm\Selection\RouletteWheelSelection.fs" />
 		<Compile Include="GeneticAlgorithm\Mutation\MutationMethod.fs" />

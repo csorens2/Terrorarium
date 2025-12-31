@@ -79,7 +79,8 @@ module Simulator =
                     individual)
 
         let ga = {
-            GeneticAlgorithm.SelectionMethod = {SelectionMethod.Select = RouletteWheelSelection.Select};
+            //GeneticAlgorithm.SelectionMethod = {SelectionMethod.Select = RouletteWheelSelection.Select};
+            GeneticAlgorithm.SelectionMethod = {SelectionMethod.Select = RankSelection.Linear simulation.Config.RankSelectionPressure};
             GeneticAlgorithm.CrossoverMethod = {CrossoverMethod.Crossover = UniformCrossover.Crossover};
             GeneticAlgorithm.MutationMethod = {
                 MutationMethod.Mutate = 
