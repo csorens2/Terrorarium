@@ -14,7 +14,7 @@ type NeuronTests () =
         let testList = [|1.0|]
         let testNeuron = {Neuron.Bias = 0; Weights = testList; Threshold = 0.0}
         let exceptionFunc : Func<obj> = Func<obj>(fun () -> Neuron.Propogate [|2.0;3.0|] testNeuron) 
-        Assert.ThrowsException(exceptionFunc)
+        Assert.ThrowsExactly(exceptionFunc)
         |> ignore
 
     [<TestMethod>]

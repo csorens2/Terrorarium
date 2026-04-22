@@ -13,20 +13,14 @@ module Brain =
         {LayerTopology.Neurons = 2}
     ]
 
-    let New config nn = 
-        {Brain.SpeedAccel = config.SimSpeedAccel; RotationAccel = config.SimRotationAccel; NeuralNetwork = nn}
+    let New config nn = {Brain.SpeedAccel = config.SimSpeedAccel; RotationAccel = config.SimRotationAccel; NeuralNetwork = nn}
 
-    let Random config = 
-        let nn = NeuralNetwork.Random (Topology config)
-        New config nn
+    let Random config = New config (NeuralNetwork.Random (Topology config))
 
-    let FromChromosome config chromosome = 
-        let nn = NeuralNetwork.FromWeights (Topology config) chromosome.Genes
-        New config nn
+    let FromChromosome config chromosome = New config (NeuralNetwork.FromWeights (Topology config) chromosome.Genes)
 
-    let AsChromosome (brain:Brain) = 
-        {Chromosome.Genes = NeuralNetwork.Weights brain.NeuralNetwork}
-
+    let AsChromosome brain = {Chromosome.Genes = NeuralNetwork.Weights brain.NeuralNetwork}
+        
     let Propagate vision brain = 
         let response = 
             NeuralNetwork.Propagate brain.NeuralNetwork vision

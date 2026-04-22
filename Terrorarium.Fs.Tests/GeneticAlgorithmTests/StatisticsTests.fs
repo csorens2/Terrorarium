@@ -31,14 +31,14 @@ type StatisticsTests () =
                     Max = 6.0
                     Avg = 5.0
                     Median = 5.0
-                    Statistics = GAStatistics.New testPopulation1
+                    Statistics = FitnessStatistics.New testPopulation1
                 |}
                 {|
                     Min = 4.0
                     Max = 7.0
                     Avg = 5.5
                     Median = 5.5
-                    Statistics = GAStatistics.New testPopulation2
+                    Statistics = FitnessStatistics.New testPopulation2
                 |}
             ]
 

@@ -14,7 +14,7 @@ type UniformCrossoverTests () =
         let crossover_choices = [true;true;false;false;true]
 
         let exceptionFunc : Func<obj> = Func<obj>(fun () -> (UniformCrossover.PerformCrossover parent_a parent_b crossover_choices)) 
-        ignore (Assert.ThrowsException(exceptionFunc))
+        ignore (Assert.ThrowsExactly(exceptionFunc))
 
     [<TestMethod>]
     member this.``Test Successful Gene Crossover`` () =

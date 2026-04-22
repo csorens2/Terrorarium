@@ -12,7 +12,7 @@ type GaussianMutationTests () =
         let testChromosome = {Chromosome.Genes = Array.empty}
         let exceptionFunc : Func<obj> = Func<obj>(fun () -> GaussianMutation.Mutate 1.1 0.5 testChromosome)
         let exceptionFunc2 : Func<obj> = Func<obj>(fun () -> GaussianMutation.Mutate -0.1 0.5 testChromosome)
-        Assert.ThrowsException(exceptionFunc)
+        Assert.ThrowsExactly(exceptionFunc)
         |> ignore
-        Assert.ThrowsException(exceptionFunc2)
+        Assert.ThrowsExactly(exceptionFunc2)
         |> ignore

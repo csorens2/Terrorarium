@@ -12,7 +12,7 @@ type Simulation = {
 
 module Simulator = 
     let ProcessCollisions simulation =
-        let rec processCollisions (processedAnimals: Animal list) (unprocessedAnimals:Animal list) uneatenFood totalEaten = 
+        let rec processCollisions processedAnimals unprocessedAnimals uneatenFood totalEaten = 
             if List.isEmpty unprocessedAnimals then
                 (processedAnimals, uneatenFood, totalEaten)
             else
@@ -40,25 +40,18 @@ module Simulator =
                     (totalEaten + amountEaten)
         let world = simulation.World
         let (animals, leftoverFood, eatenFood) = processCollisions (List.empty) (Array.toList world.Animals) (world.Foods) 0
-        let newFood = 
-            Array.init eatenFood (fun _ -> Food.New simulation.Config)
-        {simulation with 
-            World = {World.Animals = List.toArray animals; Foods = Array.append leftoverFood newFood}}
-    
+        let newFood = Array.init eatenFood (fun _ -> Food.New simulation.Config)
+        {simulation with World = {World.Animals = List.toArray animals; Foods = Array.append leftoverFood newFood}}
 
     let ProcessBrains simulation =
         let world = simulation.World
-        let processedAnimals = 
-            world.Animals
-            |> Array.map(fun x -> Animal.ProcessBrain simulation.Config world.Foods x)
+        let processedAnimals = Array.map(fun x -> Animal.ProcessBrain simulation.Config world.Foods x) world.Animals
         {simulation with 
             World = {world with Animals = processedAnimals}}
 
     let ProcessMovements simulation =
         let world = simulation.World
-        let processedAnimals = 
-            world.Animals
-            |> Array.map(fun x -> Animal.ProcessMovement x)
+        let processedAnimals = Array.map(fun x -> Animal.ProcessMovement x) world.Animals
         {simulation with 
             World = {world with Animals = processedAnimals}}
 
@@ -79,22 +72,17 @@ module Simulator =
                     individual)
 
         let ga = {
-            //GeneticAlgorithm.SelectionMethod = {SelectionMethod.Select = RouletteWheelSelection.Select};
-            GeneticAlgorithm.SelectionMethod = {SelectionMethod.Select = RankSelection.Linear simulation.Config.RankSelectionPressure};
-            GeneticAlgorithm.CrossoverMethod = {CrossoverMethod.Crossover = UniformCrossover.Crossover};
-            GeneticAlgorithm.MutationMethod = {
-                MutationMethod.Mutate = 
-                    GaussianMutation.Mutate simulation.Config.GAMutChance simulation.Config.GAMutCoeff}}
+            //GeneticAlgorithm.SelectionMethod = WeightedRandomSelection.SelectIndividual;
+            GeneticAlgorithm.SelectionMethod = RankSelection.Linear simulation.Config.RankSelectionPressure;
+            GeneticAlgorithm.CrossoverMethod = UniformCrossover.Crossover;
+            GeneticAlgorithm.MutationMethod = GaussianMutation.Mutate simulation.Config.GAMutChance simulation.Config.GAMutCoeff}
 
         let (evolvedIndividuals, gaStats) = GeneticAlgorithm.Evolve ga individuals
 
-        let newAnimals = 
-            evolvedIndividuals
-            |> Array.map (fun x -> Animal.FromChromosome simulation.Config x.Chromosome)
+        let newAnimals = Array.map (fun x -> Animal.FromChromosome simulation.Config x.Chromosome) evolvedIndividuals
 
-        let newFood =     
-            Array.init (Seq.length world.Foods) (fun _ -> Food.New simulation.Config)
-
+        let newFood = Array.init (Seq.length world.Foods) (fun _ -> Food.New simulation.Config)
+            
         let stats = {SimulationStatistics.Generation = simulation.Generation; GAStatistics = gaStats}
 
         {simulation with 
@@ -118,6 +106,5 @@ module Simulator =
             |> TryEvolving
         {stepResult with Age = stepResult.Age + 1}
 
-    let New config = 
-        {Simulation.Config = config; World = World.New config; Age = 0; Generation = 0; Statistics = List.empty}
+    let New config = {Simulation.Config = config; World = World.New config; Age = 0; Generation = 0; Statistics = List.empty}
     

@@ -1,13 +1,14 @@
 ﻿namespace Terrorarium
 
-type GAStatistics = {
+/// Statistics
+type FitnessStatistics = {
     MinFitness: float
     MaxFitness: float
     AvgFitness: float
     MedianFitness: float
 }
 
-module GAStatistics = 
+module FitnessStatistics = 
     let New population = 
         let fitnesses = 
             population
@@ -24,4 +25,4 @@ module GAStatistics =
                 (fitnesses[fitnessesLength / 2 - 1] + fitnesses[fitnessesLength / 2]) / 2.0
             else
                 fitnesses[fitnessesLength / 2]
-        {GAStatistics.MinFitness = minFit; MaxFitness = maxFit; AvgFitness = avgFit; MedianFitness = medianFit}
+        {FitnessStatistics.MinFitness = minFit; MaxFitness = maxFit; AvgFitness = avgFit; MedianFitness = medianFit}

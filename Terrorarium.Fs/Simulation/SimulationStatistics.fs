@@ -2,5 +2,5 @@
 
 type SimulationStatistics = {
     Generation: int
-    GAStatistics: GAStatistics
+    GAStatistics: FitnessStatistics
 }

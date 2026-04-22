@@ -11,14 +11,10 @@
 		<Compile Include="Config.fs" />
 		<Compile Include="GeneticAlgorithm\Chromosome.fs" />
 		<Compile Include="GeneticAlgorithm\Individual.fs" />
-		<Compile Include="GeneticAlgorithm\GAStatistics.fs" />
-		<Compile Include="GeneticAlgorithm\Crossover\CrossoverMethod.fs" />
+		<Compile Include="GeneticAlgorithm\FitnessStatistics.fs" />
 		<Compile Include="GeneticAlgorithm\Crossover\UniformCrossover.fs" />
-		<Compile Include="GeneticAlgorithm\Selection\RandomSelection.fs" />
+		<Compile Include="GeneticAlgorithm\Selection\WeightedRandomSelection.fs" />
 		<Compile Include="geneticalgorithm\selection\RankSelection.fs" />
-		<Compile Include="GeneticAlgorithm\Selection\SelectionMethod.fs" />
-		<Compile Include="GeneticAlgorithm\Selection\RouletteWheelSelection.fs" />
-		<Compile Include="GeneticAlgorithm\Mutation\MutationMethod.fs" />
 		<Compile Include="GeneticAlgorithm\Mutation\GaussianMutation.fs" />
 		<Compile Include="GeneticAlgorithm\GeneticAlgorithm.fs" />
 		<Compile Include="NeuralNetwork\LayerTopology.fs" />
@@ -40,6 +36,10 @@
 	<ItemGroup>
 		<PackageReference Include="MathNet.Numerics.FSharp" Version="5.0.0" />
 		<PackageReference Include="MathNet.Spatial" Version="0.6.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="FSharp.Core" Version="10.1.202" />
 	</ItemGroup>
 
 </Project>

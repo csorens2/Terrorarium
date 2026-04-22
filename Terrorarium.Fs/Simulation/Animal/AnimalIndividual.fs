@@ -14,5 +14,4 @@ module AnimalIndividual =
         Fitness = float animal.Satiation
     }
 
-    let IntoAnimal config animalIndivid =
-        Animal.FromChromosome config animalIndivid
+    let IntoAnimal config animalIndivid = Animal.FromChromosome config animalIndivid

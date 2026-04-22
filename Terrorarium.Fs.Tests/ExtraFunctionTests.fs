@@ -13,7 +13,7 @@ type ExtraFunctionTests () =
         let min = 1.0
         let max = 0.0
         let exceptionFunc : Func<obj> = Func<obj>(fun () -> Wrap 0.0 min max)
-        Assert.ThrowsException(exceptionFunc)
+        Assert.ThrowsExactly(exceptionFunc)
         |> ignore
 
     [<TestMethod>]

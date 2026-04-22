@@ -1,19 +1,21 @@
 ﻿namespace Terrorarium
 
+open System
+
 module GaussianMutation = 
-    let Mutate chance coeff child = 
+    let Mutate chance coefficient baseChromosome = 
         if not (0.0 <= chance && chance <= 1.0) then
-            failwith "Invalid mutation chance"
-        let mutatedGenes = 
-            child.Genes
-            |> Array.map (fun x -> 
+            failwith "Invalid mutation chance. Must be between 0.0 and 1.0"
+        else
+            let mutateGene gene = 
                 let sign = 
-                    if RNG.NextBool () then
+                    if List.randomChoice [true; false] then
                         -1.0
                     else
                         1.0
-                if RNG.NextDouble () <= chance then
-                    x + (sign * coeff * RNG.NextDouble ())
+                if Random.Shared.NextDouble() <= chance then 
+                    gene + (sign * coefficient * Random.Shared.NextDouble())
                 else
-                    x)
-        {Chromosome.Genes = mutatedGenes}
+                    gene
+
+            {Chromosome.Genes = Array.map mutateGene baseChromosome.Genes}

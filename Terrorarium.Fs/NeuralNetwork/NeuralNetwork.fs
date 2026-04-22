@@ -5,8 +5,7 @@ type NeuralNetwork = {
 }
 
 module NeuralNetwork = 
-    let New layers = 
-        {NeuralNetwork.Layers = layers}
+    let New layers = {NeuralNetwork.Layers = layers}
 
     let Random layerTopologies = 
         let rec buildLayers (remainLayers: seq<LayerTopology array>) = seq {
@@ -30,18 +29,13 @@ module NeuralNetwork =
                     (Seq.tail windowedLayers)
                     (Seq.skip totalWeights remainingWeights)
         }
-        let windowedLayers = 
-            layerTopologies
-            |> Seq.windowed 2
+        let windowedLayers = Seq.windowed 2 layerTopologies
         {NeuralNetwork.Layers = Seq.toArray (buildLayers windowedLayers weights)}
 
-    let Propagate neuralNetwork inputs  = 
-        neuralNetwork.Layers
-        |> Array.fold(fun lastLayerResult nextLayer -> 
-            Layer.Propagate lastLayerResult nextLayer) inputs
+    let Propagate neuralNetwork inputs =
+        Array.fold
+            (fun lastLayerResult nextLayer -> Layer.Propagate lastLayerResult nextLayer) 
+            inputs
+            neuralNetwork.Layers
 
-    let Weights neuralNetwork = 
-        neuralNetwork.Layers
-        |> Array.collect (fun x -> 
-            x.Neurons 
-            |> Array.collect (fun y -> Array.append [|y.Bias|] y.Weights)) 
+    let Weights neuralNetwork = Array.collect (fun layer -> Array.collect (fun neuron -> Array.append [|neuron.Bias|] neuron.Weights) layer.Neurons) neuralNetwork.Layers
