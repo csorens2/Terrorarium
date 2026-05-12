@@ -60,7 +60,7 @@ module Simulator =
         let maxSatiation = 
             world.Animals
             |> Array.map (fun animal -> animal.Satiation)
-            |> Array.maxBy (fun x -> x)
+            |> Array.max
 
         let individuals = 
             world.Animals
@@ -79,7 +79,7 @@ module Simulator =
 
         let (evolvedIndividuals, gaStats) = GeneticAlgorithm.Evolve ga individuals
 
-        let newAnimals = Array.map (fun x -> Animal.FromChromosome simulation.Config x.Chromosome) evolvedIndividuals
+        let newAnimals = Array.map (fun individual -> Animal.FromChromosome simulation.Config individual.Chromosome) evolvedIndividuals
 
         let newFood = Array.init (Seq.length world.Foods) (fun _ -> Food.New simulation.Config)
             
