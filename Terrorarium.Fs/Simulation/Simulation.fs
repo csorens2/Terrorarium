@@ -19,7 +19,7 @@ module Simulator =
                 let nextAnimal = List.head unprocessedAnimals
                 let foodMap = 
                     uneatenFood
-                    |> Array.groupBy (fun (food:Food) -> Line2D(nextAnimal.Position, food.Position).Length <= simulation.Config.FoodSize )
+                    |> Array.groupBy (fun (food:Food) -> Line2D(nextAnimal.Position, food.Position).Length <= simulation.Config.FoodSize)
                     |> Array.fold (fun (acc: Map<bool, Food array>) (boolVal, foodSeq) -> acc.Add (boolVal,foodSeq) ) Map.empty
                 let amountEaten = 
                     if foodMap.ContainsKey true then
