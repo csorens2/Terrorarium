@@ -3,7 +3,7 @@
 ![My Image](ScreenShot.png)
 
 ## Overview
-Terrorarium is a machine learning project I created to learn about neural networks, genetic algorithms, F#, and functional programming. It simulates a series of birds that compete with each other for food.
+Terrorarium is a machine learning project I created to learn about neural networks, genetic algorithms, F#, and functional programming. It simulates a series of birds that compete with each other for food, with behavior that improves over generations.
 
 The simulation is setup by
 1. Randomly generating a large amount of food, each at a random location.
